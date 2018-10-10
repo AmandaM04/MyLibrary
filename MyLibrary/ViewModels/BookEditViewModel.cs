@@ -19,5 +19,14 @@ namespace MyLibrary.ViewModels
             Libraries = context.Library.Select(library =>
             new SelectListItem { Text = library.Name, Value = library.LibraryId.ToString() }).ToList();
         }
+
+        /* created this constructor to redisplay form with information already typed inside. Form will
+          allow submission but if modelstate isn't valid, user will get an error message showing what's wrong*/
+        public BookEditViewModel(ApplicationDbContext context, Book book)
+        {
+            Libraries = context.Library.Select(library =>
+            new SelectListItem { Text = library.Name, Value = library.LibraryId.ToString() }).ToList();
+            Book = book;
+        }
     }
 }
