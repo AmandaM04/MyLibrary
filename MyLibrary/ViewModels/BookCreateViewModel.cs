@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace MyLibrary.ViewModels
 {
-    public class BookEditViewModel
+    public class BookCreateViewModel
     {
         public Book Book { get; set; }
 
         public List<SelectListItem> Libraries { get; set; }
 
-        public BookEditViewModel(ApplicationDbContext context)
+        public BookCreateViewModel(ApplicationDbContext context)
         {
             Libraries = context.Library.Select(library =>
             new SelectListItem { Text = library.Name, Value = library.LibraryId.ToString() }).ToList();
@@ -22,7 +22,7 @@ namespace MyLibrary.ViewModels
 
         /* created this constructor to redisplay form with information already typed inside. Form will
           allow submission but if modelstate isn't valid, user will get an error message showing what's wrong*/
-        public BookEditViewModel(ApplicationDbContext context, Book book)
+        public BookCreateViewModel(ApplicationDbContext context, Book book)
         {
             Libraries = context.Library.Select(library =>
             new SelectListItem { Text = library.Name, Value = library.LibraryId.ToString() }).ToList();
