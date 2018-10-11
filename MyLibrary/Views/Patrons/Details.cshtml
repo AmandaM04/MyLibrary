@@ -23,16 +23,23 @@
             @Html.DisplayFor(model => model.LastName)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.CheckedOutBooks)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CheckedOutBooks)
-        </dd>
-        <dt>
             @Html.DisplayNameFor(model => model.Library)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Library.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CheckedOutBooks)
+        </dt>
+        <dd>
+            <ul>
+                @foreach (var book in @Model.CheckedOutBooks)
+                {
+                    <li>
+                        @Html.DisplayFor(modelItem => book.Title)
+                    </li>
+                }
+            </ul>
         </dd>
     </dl>
 </div>

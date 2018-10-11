@@ -84,8 +84,9 @@ namespace MyLibrary.Models
             {
                 return NotFound();
             }
-            ViewData["BookId"] = new SelectList(_context.Book, "BookId", "Author", patron.CheckedOutBooks);
-            return View(patron);
+            PatronEditViewModel patronEditViewModel = new PatronEditViewModel(_context);
+            patronEditViewModel.Patron = patron;
+            return View(patronEditViewModel);
         }
 
         // POST: Patrons/Edit/5
@@ -93,7 +94,7 @@ namespace MyLibrary.Models
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PatronId,FirstName,LastName,BookId")] Patron patron)
+        public async Task<IActionResult> Edit(int id, [Bind("PatronId,FirstName,LastName,LibraryId")] Patron patron)
         {
             if (id != patron.PatronId)
             {
@@ -120,8 +121,9 @@ namespace MyLibrary.Models
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BookId"] = new SelectList(_context.Book, "BookId", "Author", patron.CheckedOutBooks);
-            return View(patron);
+            PatronEditViewModel patronEditViewModel = new PatronEditViewModel(_context);
+            patronEditViewModel.Patron = patron;
+            return View(patronEditViewModel);
         }
 
         // GET: Patrons/Delete/5
