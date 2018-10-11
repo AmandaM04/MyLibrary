@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyLibrary.Data;
 
 namespace MyLibrary.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181011142435_Patron")]
+    partial class Patron
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,15 +36,11 @@ namespace MyLibrary.Migrations
 
                     b.Property<int>("LibraryId");
 
-                    b.Property<int?>("PatronId");
-
                     b.Property<string>("Title");
 
                     b.HasKey("BookId");
 
                     b.HasIndex("LibraryId");
-
-                    b.HasIndex("PatronId");
 
                     b.ToTable("Book");
                 });
@@ -61,7 +59,11 @@ namespace MyLibrary.Migrations
 
                     b.Property<string>("OpenHour");
 
+                    b.Property<int?>("PatronId");
+
                     b.HasKey("LibraryId");
+
+                    b.HasIndex("PatronId");
 
                     b.ToTable("Library");
                 });
@@ -72,17 +74,15 @@ namespace MyLibrary.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("FirstName")
-                        .IsRequired();
+                    b.Property<int>("BookId");
 
-                    b.Property<string>("LastName")
-                        .IsRequired();
+                    b.Property<string>("FirstName");
 
-                    b.Property<int>("LibraryId");
+                    b.Property<string>("LastName");
 
                     b.HasKey("PatronId");
 
-                    b.HasIndex("LibraryId");
+                    b.HasIndex("BookId");
 
                     b.ToTable("Patron");
                 });
@@ -93,17 +93,20 @@ namespace MyLibrary.Migrations
                         .WithMany("Books")
                         .HasForeignKey("LibraryId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
 
-                    b.HasOne("MyLibrary.Models.Patron", "Patron")
-                        .WithMany("CheckedOutBooks")
+            modelBuilder.Entity("MyLibrary.Models.Library", b =>
+                {
+                    b.HasOne("MyLibrary.Models.Patron")
+                        .WithMany("Libraries")
                         .HasForeignKey("PatronId");
                 });
 
             modelBuilder.Entity("MyLibrary.Models.Patron", b =>
                 {
-                    b.HasOne("MyLibrary.Models.Library", "Library")
-                        .WithMany("Patrons")
-                        .HasForeignKey("LibraryId")
+                    b.HasOne("MyLibrary.Models.Book", "Book")
+                        .WithMany()
+                        .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
