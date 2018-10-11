@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyLibrary.Data;
 
 namespace MyLibrary.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181011154417_patronbookupdate")]
+    partial class patronbookupdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,7 +104,7 @@ namespace MyLibrary.Migrations
             modelBuilder.Entity("MyLibrary.Models.Patron", b =>
                 {
                     b.HasOne("MyLibrary.Models.Library", "Library")
-                        .WithMany("Patrons")
+                        .WithMany()
                         .HasForeignKey("LibraryId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

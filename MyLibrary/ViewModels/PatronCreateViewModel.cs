@@ -8,32 +8,25 @@ using System.Threading.Tasks;
 
 namespace MyLibrary.ViewModels
 {
-    public class BookCreateViewModel
+    public class PatronCreateViewModel
     {
-        public Book Book { get; set; }
+        public Patron Patron { get; set; }
 
-        //allows a dropdown for libraries
         public List<SelectListItem> Libraries { get; set; }
 
-        //allows a dropdown for patrons
-        public List<SelectListItem> Patrons { get; set; }
-
-        public BookCreateViewModel(ApplicationDbContext context)
+        public PatronCreateViewModel(ApplicationDbContext context)
         {
             Libraries = context.Library.Select(library =>
             new SelectListItem { Text = library.Name, Value = library.LibraryId.ToString() }).ToList();
-
-            Patrons = context.Patron.Select(patron =>
-            new SelectListItem { Text = patron.FirstName + patron.LastName, Value = patron.PatronId.ToString() }).ToList();
         }
 
         /* created this constructor to redisplay form with information already typed inside. Form will
           allow submission but if modelstate isn't valid, user will get an error message showing what's wrong*/
-        public BookCreateViewModel(ApplicationDbContext context, Book book)
+        public PatronCreateViewModel(ApplicationDbContext context, Patron patron)
         {
             Libraries = context.Library.Select(library =>
             new SelectListItem { Text = library.Name, Value = library.LibraryId.ToString() }).ToList();
-            Book = book;
+            Patron = patron;
         }
     }
 }
