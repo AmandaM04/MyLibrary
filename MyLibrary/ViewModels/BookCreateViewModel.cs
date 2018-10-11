@@ -12,12 +12,19 @@ namespace MyLibrary.ViewModels
     {
         public Book Book { get; set; }
 
+        //allows a dropdown for libraries
         public List<SelectListItem> Libraries { get; set; }
+
+        //allows a dropdown for patrons
+        public List<SelectListItem> Patrons { get; set; }
 
         public BookCreateViewModel(ApplicationDbContext context)
         {
             Libraries = context.Library.Select(library =>
             new SelectListItem { Text = library.Name, Value = library.LibraryId.ToString() }).ToList();
+
+            Patrons = context.Patron.Select(patron =>
+            new SelectListItem { Text = patron.FirstName + patron.LastName, Value = patron.PatronId.ToString() }).ToList();
         }
 
         /* created this constructor to redisplay form with information already typed inside. Form will

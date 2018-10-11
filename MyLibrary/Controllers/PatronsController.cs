@@ -36,6 +36,7 @@ namespace MyLibrary.Models
 
             var patron = await _context.Patron
                 .Include(p => p.Library)
+                .Include(p => p.CheckedOutBooks)
                 .FirstOrDefaultAsync(m => m.PatronId == id);
             if (patron == null)
             {

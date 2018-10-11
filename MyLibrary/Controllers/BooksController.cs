@@ -100,7 +100,7 @@ namespace MyLibrary.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BookId,Title,Author,ISBN,CheckedOut,LibraryId")] Book book)
+        public async Task<IActionResult> Edit(int id, [Bind("BookId,Title,Author,ISBN,CheckedOut,LibraryId,PatronId")] Book book)
         {
             if (id != book.BookId)
             {
