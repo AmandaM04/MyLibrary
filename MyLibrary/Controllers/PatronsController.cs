@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -134,6 +135,12 @@ namespace MyLibrary.Models
                 return NotFound();
             }
 
+            if (BookExists(id))
+            {
+                return new StatusCodeResult(StatusCodes.Status405MethodNotAllowed);
+            }
+            else { 
+
             var patron = await _context.Patron
                 .Include(p => p.Library)
                 .FirstOrDefaultAsync(m => m.PatronId == id);
@@ -143,6 +150,7 @@ namespace MyLibrary.Models
             }
 
             return View(patron);
+            }
         }
 
         // POST: Patrons/Delete/5
@@ -159,6 +167,12 @@ namespace MyLibrary.Models
         private bool PatronExists(int id)
         {
             return _context.Patron.Any(e => e.PatronId == id);
+        }
+
+        //this is setting a function to check if a patronId is connected to any book inside the database
+        private bool BookExists(int? id)
+        {
+            return _context.Book.Any(e => e.PatronId == id);
         }
     }
 }
